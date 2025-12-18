@@ -40,7 +40,7 @@ window.addEventListener("DOMContentLoaded",() => {
     }
 
     if (valorGuardadoPost !==null){
-        postForm= JSON.parse(valorGuardadoPost);
+        postsList= JSON.parse(valorGuardadoPost);
         statusArea.textContent= "cargado desde el localstorage";
     }
 });
@@ -52,12 +52,12 @@ window.addEventListener("DOMContentLoaded",() => {
 // - Validar que esté entre 1 y 10 (o mostrar mensaje de error).
 // - Actualizar el área de estado a "Cargando..." con una clase de loading.
 // - Llamar a una función que haga la petición fetch a la API.
-formEvent.addEventListener("submit", function (event)  {
-  event.preventDefault
-    var userId= parseInt(userIdInput.textContent);  
-    if(userId<=10 || userId>=1){
+postForm.addEventListener("submit", function (event)  {
+  event.preventDefault();
+    var userId= parseInt(userIdInput.value);  
+    if(userId<=10 && userId>=1){
       statusArea.textContent="cargando...";
-      fetchPostsByUser(userIdInput.textContent)
+      fetchPostsByUser(userIdInput.value)
     }
     else{
       console.log("error")
@@ -125,7 +125,7 @@ function renderPosts(posts) {
 // exitosa, guardar el userId en localStorage. Si no, limpiar ese valor.
 rememberUserCheckbox.addEventListener("change", function(){
     if(rememberUserCheckbox.checked){
-        localStorage.setItem(LAST_USER_ID_KEY,userIdInput.textContent)
+        localStorage.setItem(LAST_USER_ID_KEY,userIdInput.value)
     }
     else{
         localStorage.removeItem(LAST_USER_ID_KEY)
@@ -144,3 +144,4 @@ clearResultsBtn.addEventListener("click", function(){
     localStorage.removeItem( POSTS_DATA_KEY)
 
 })
+
