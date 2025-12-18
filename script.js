@@ -52,14 +52,18 @@ window.addEventListener("DOMContentLoaded",() => {
 // - Validar que esté entre 1 y 10 (o mostrar mensaje de error).
 // - Actualizar el área de estado a "Cargando..." con una clase de loading.
 // - Llamar a una función que haga la petición fetch a la API.
-formEvent.addEventListener("submit", function ()  {
-    var userId= parseInt(userIdInput.textContent);  //creo que la gracia de la 2 es que implementa de la 3 y 4
+formEvent.addEventListener("submit", function (event)  {
+  event.preventDefault
+    var userId= parseInt(userIdInput.textContent);  
     if(userId<=10 || userId>=1){
-        statusArea.textContent="cargando...";
+      statusArea.textContent="cargando...";
+      fetchPostsByUser(userIdInput.textContent)
     }
     else{
-        console.log("error")
+      console.log("error")
+      statusArea.textContent="error no existe esa id"
     }
+
 });
 
 
@@ -78,7 +82,7 @@ async function fetchPostsByUser(userId) {
     const response = await fetch(url);
     if (!response.ok) throw new Error("Error en la petición");
     const data = await response.json();
-    statusArea.textContent = "Éxito: publicaciones cargadas"; //no se si estas funciones, funcionen xd pero estoy en eso
+    statusArea.textContent = "Éxito: publicaciones cargadas"; 
     renderPosts(data);
   } catch (error) {
     statusArea.textContent = `Error: ${error.message}`;
